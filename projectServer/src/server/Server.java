@@ -12,7 +12,7 @@ import java.net.Socket;
  * Author by Lak J Comspaceddd
  */
 public class Server {
- 
+	
 	private static ServerSocket serverSocket;
 	private static Socket clientSocket;
 	private static InputStreamReader inputStreamReader;
@@ -22,30 +22,27 @@ public class Server {
 	public static void main(String[] args) {
 		try {
 			serverSocket = new ServerSocket(4444); // Server socket
- 
 		} catch (IOException e) {
 			System.out.println("Could not listen on port: 4444");
 		}
- 
 		System.out.println("Server started. Listening to the port 4444");
  
+		DataHandler dh = new DataHandler();
+		
 		while (true) {
 			try {
- 
 				clientSocket = serverSocket.accept(); // accept the client connection
 				inputStreamReader = new InputStreamReader(clientSocket.getInputStream());
 				bufferedReader = new BufferedReader(inputStreamReader); // get the client message
 				message = bufferedReader.readLine();
+				dh.setMessage(message);
  
 				System.out.println(message);
 				inputStreamReader.close();
 				clientSocket.close();
- 
 			} catch (IOException ex) {
 				System.out.println("Problem in message reading");
 			}
 		}
- 
 	}
- 
 }
