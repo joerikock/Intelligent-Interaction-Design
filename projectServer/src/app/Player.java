@@ -13,6 +13,11 @@ public class Player {
 		this.hobbies = hobbies;
 	}
 	
+	public Player (String name, String surname) {
+		this.name = name;
+		this.surname = surname;
+	}
+	
 	public String getSurname() {
 		return surname;
 	}
