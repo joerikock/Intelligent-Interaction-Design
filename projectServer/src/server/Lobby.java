@@ -12,6 +12,7 @@ public class Lobby {
 	private String code;
 	private int idCount = 0;
 	private HashMap<Integer, Integer> targets;
+	private HashMap<Integer, Integer> score;
 	
 	public Lobby() {
 		StringBuilder sb = new StringBuilder();
@@ -35,6 +36,17 @@ public class Lobby {
 		targets.put(idArrayList.get(idArrayList.size()-1), idArrayList.get(0));
 	}
 	
+	public HashMap<Integer, Integer> getTargets(){
+		return targets;
+	}
+	
+	public int getTarget(int player){
+		return targets.get(player);
+	}
+	
+	public void killPlayer(int target){
+		
+	}
 	public HashMap<Integer, Player> getPlayers(){
 		return players;
 	}
