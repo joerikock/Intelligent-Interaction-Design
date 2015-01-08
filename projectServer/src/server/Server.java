@@ -9,7 +9,7 @@ import java.net.Socket;
 /**
  * This is a simple server application. This server receive a string message
  * from the Android mobile phone and show it on the console.
- * Author by Lak J Comspace
+ * Author by Lak J Comspaceddd
  */
 public class Server {
  
