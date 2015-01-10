@@ -1,5 +1,6 @@
 package app;
 
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -13,6 +14,7 @@ public class Lobby {
 	private HashMap<Integer, Integer> targets;
 	private HashMap<Integer, Integer> score;
 	private int hintCount = 0;
+	private HashMap<InetAddress, Integer> ipAddresses;
 	
 	public Lobby() {
 		StringBuilder sb = new StringBuilder();
@@ -55,14 +57,16 @@ public class Lobby {
 		return players;
 	}
 	
-	public void addPlayer(String name, String surname){
+	public void addPlayer(String name, String surname, InetAddress ipAddress){
 		players.put(idCount, new Player(name, surname));
+		ipAddresses.put(ipAddress, idCount);
 		score.put(idCount, 0);
 		idCount++;
 	}
 	
-	public void addPlayer(String name, String surname, ArrayList<Hobby> hobbies){
+	public void addPlayer(String name, String surname, ArrayList<Hobby> hobbies, InetAddress ipAddress){
 		players.put(idCount, new Player(name, surname, hobbies));
+		ipAddresses.put(ipAddress, idCount);
 		score.put(idCount, 0);
 		idCount++;	
 	}
