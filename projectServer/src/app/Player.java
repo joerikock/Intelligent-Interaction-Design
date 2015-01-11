@@ -6,16 +6,19 @@ import java.util.ArrayList;
 public class Player {
 	private String name;
 	private String surname;
-	private ArrayList<Hobby> hobbies;
+	private String[] hobbies;
 	private InetAddress ipAddress;
+	private String code;
 	
-	public Player (String name, String surname, ArrayList<Hobby> hobbies) {
+	public Player (String name, String surname, String[] hobbies, String code) {
+		this.code = code;
 		this.name = name;
 		this.surname = surname;
 		this.hobbies = hobbies;
 	}
 	
-	public Player (String name, String surname) {
+	public Player (String name, String surname, String code) {
+		this.code = code;
 		this.name = name;
 		this.surname = surname;
 	}
@@ -34,10 +37,10 @@ public class Player {
 		this.name = name;
 	}
 	
-	public ArrayList<Hobby> getHobbies() {
+	public String[] getHobbies() {
 		return hobbies;
 	}
-	public void setHobbies(ArrayList<Hobby> hobbies) {
+	public void setHobbies(String[] hobbies) {
 		this.hobbies = hobbies;
 	}
 	
