@@ -17,9 +17,9 @@ import java.util.HashMap;
  */
 public class Server {
 	
-	private static Socket client;
-	private static PrintWriter printwriter;
+	private static PrintWriter printWriter;
 	private static ServerSocket serverSocket;
+	private static Socket client;
 	private static Socket clientSocket;
 	private static InputStreamReader inputStreamReader;
 	private static BufferedReader bufferedReader;
@@ -51,7 +51,11 @@ public class Server {
 	}
 
 	public static void handleLobby(String message) {
+		
 		String[] info = message.split(", ");
+		for(int i = 0; i < info.length; i++ ){
+			System.out.println(info[i]);
+		}
 		String name = info[0] + "#" + lobbyCount;
 		try {
 			InetAddress ip = InetAddress.getByName(info[1]);
@@ -122,6 +126,7 @@ public class Server {
 			int target = lobby.getIdFromIp(targetIp);
 			int killer = lobby.getKiller(target);
 			InetAddress killerIp = lobby.getIpFromId(killer);
+			lobby.killTarget(killer);
 			//send confirmation to killer
 			sendMessage("5", killerIp);
 		} catch (UnknownHostException e) {
@@ -132,20 +137,20 @@ public class Server {
 	
 	public static void sendMessage(String message, InetAddress ip){
 		try {
-
-            client = new Socket(ip, 4445); // connect to the server
-            printwriter = new PrintWriter(client.getOutputStream(), true);
-            printwriter.write(message); // write the message to output stream
-            printwriter.flush();
-            printwriter.close();
+			System.out.println("connecting");
+            client = new Socket("130.89.162.215", 4445); // connect to the server
+            System.out.println("connected");
+            printWriter = new PrintWriter(client.getOutputStream(), true);
+            printWriter.write(message); // write the message to output stream
+            System.out.println("message sent");
+            printWriter.flush();
+            printWriter.close();
             client.close(); // closing the connection
-
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        }
+		}
 	}
+	
 	public static void main(String[] args) {
 		try {
 			serverSocket = new ServerSocket(4444); // Server socket
@@ -161,9 +166,9 @@ public class Server {
 				bufferedReader = new BufferedReader(inputStreamReader); // get the client message
 				message = bufferedReader.readLine();
 				System.out.println(message);
-				doAction(message);
 				inputStreamReader.close();
 				clientSocket.close();
+				doAction(message);
 			} catch (IOException ex) {
 				System.out.println("Problem in message reading");
 			}
