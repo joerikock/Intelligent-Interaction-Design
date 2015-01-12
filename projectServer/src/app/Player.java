@@ -23,6 +23,9 @@ public class Player {
 		this.surname = surname;
 	}
 	
+	public String getCode() {
+		return code;
+	}
 	public String getSurname() {
 		return surname;
 	}

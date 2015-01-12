@@ -1,30 +1,27 @@
 package app;
 
-import java.net.InetAddress;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Random;
-import java.util.Set;
 
 public class Lobby {
 	private String name;
-	private HashMap<Integer, Player> players;
+	private HashMap<Integer, Player> players = new HashMap<Integer, Player>();
 	private String code;
 	private int idCount = 0;
-	private HashMap<Integer, Integer> targets;
-	private HashMap<Integer, Integer> killers;
-	private HashMap<Integer, Integer> score;
+	private HashMap<Integer, Integer> targets = new HashMap<Integer, Integer>();;
+	private HashMap<Integer, Integer> killers = new HashMap<Integer, Integer>();
+	private HashMap<Integer, Integer> score = new HashMap<Integer, Integer>();
 	private int hintCount = 0;
-	private HashMap<InetAddress, Integer> ipAddresses;
-	private HashMap<Integer, InetAddress> ipReversed;
-	
+
 	public Lobby(String name) {
 		this.name = name;
 		StringBuilder sb = new StringBuilder();
-		String set = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+		String set = "abcdefghijklmnopqrstuvwxyzZ1234567890";
 
-		for (int i= 0; i < 10; i++) {
+		for (int i= 0; i < 3; i++) {
 		    Random r = new Random();
 		    int k = r.nextInt(set.length()-1);
 		    sb.append(set.charAt(k));
@@ -32,12 +29,11 @@ public class Lobby {
 		code = sb.toString();
 	}
 	
-	public int getIdFromIp(InetAddress Ip) {
-		return ipAddresses.get(Ip);
+	public String getPlayerName(int id) {
+		return players.get(id).getName();
 	}
-	
-	public InetAddress getIpFromId(int id) {
-		return ipReversed.get(id);
+	public int getScore(int player) {
+		return score.get(player);
 	}
 	public String getName() {
 		return name;
@@ -79,20 +75,18 @@ public class Lobby {
 		return players;
 	}
 	
-	public void addPlayer(String name, String surname, InetAddress ipAddress, String code){
+	public int addPlayer(String name, String surname, String code){
 		players.put(idCount, new Player(name, surname, code));
-		ipAddresses.put(ipAddress, idCount);
-		ipReversed.put(idCount, ipAddress);
 		score.put(idCount, 0);
 		idCount++;
+		return idCount;
 	}
 	
-	public void addPlayer(String name, String surname, String[] hobbies, InetAddress ipAddress, String code){
+	public int addPlayer(String name, String surname, String[] hobbies, String code){
 		players.put(idCount, new Player(name, surname, hobbies, code));
-		ipAddresses.put(ipAddress, idCount);
-		ipReversed.put(idCount, ipAddress);
 		score.put(idCount, 0);
 		idCount++;	
+		return idCount;
 	}
 	
 	public String getHint(int playerId){
@@ -103,10 +97,6 @@ public class Lobby {
 	}
 	
 	public void doHints(){
-		for(int i = 0; i < players.size(); i++){
-			String message = getHint(i);
-			//ToDo sent message here
-		}
 		hintCount++;
 		if(hintCount == 4){
 			hintCount = 0;
